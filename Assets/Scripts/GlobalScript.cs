@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static class GlobalScript
 {
+    public static float MouseXSensativity = 10;
+    public static float MouseYSensativity = 10;
+    public static bool InvertPitch = false;
+
     public static List<KeyCode> DefaultControls = new List<KeyCode>()
     {
         KeyCode.W,

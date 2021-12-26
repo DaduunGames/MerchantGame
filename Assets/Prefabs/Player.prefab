@@ -46,11 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a2f29c3f03db8498732b0b57c742f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 831933353536656901}
   WalkSpeed: 10
+  MaxSpeed: 1
   SideStepSpeedModifier: 0.75
   BackStepSpeedModifier: 0.75
   Jumpspeed: 1
   MaxJumpTime: 0.5
+  JumpDelay: 0.5
+  Gravity: 10
 --- !u!143 &8103114232011148583
 CharacterController:
   m_ObjectHideFlags: 0

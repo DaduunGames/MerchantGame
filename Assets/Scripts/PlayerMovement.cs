@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Camera cam;
 
     public float WalkSpeed = 1;
     public float MaxSpeed = 1;
@@ -21,8 +22,13 @@ public class PlayerMovement : MonoBehaviour
     bool grounded;
 
     Vector3 movement;
-    
+    float verticalRotation;
+    public float CamMaxTilt = 80;
+    public float CamMinTilt = -90;
+
     private CharacterController cc;
+
+    
 
     public enum Binds
     {
@@ -44,11 +50,32 @@ public class PlayerMovement : MonoBehaviour
     }
 
     
-    void FixedUpdate()
+    void Update()
     {
+        movement.y -= Gravity;
+
+
+        float mouseX = Input.GetAxis("Mouse X"), mouseY = Input.GetAxis("Mouse Y");
+
+        if (!GlobalScript.InvertPitch)
+            mouseY = -mouseY;
+        verticalRotation += mouseY * GlobalScript.MouseYSensativity;
+        
+        verticalRotation = Mathf.Clamp(verticalRotation, CamMinTilt, CamMaxTilt);
+
+        transform.Rotate(0, mouseX * GlobalScript.MouseXSensativity, 0);
+        cam.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+
         grounded = cc.isGrounded;
 
-        movement.y -= Gravity;
+        
+
         if(movement.x > 0)
         {
             movement.x -= WalkSpeed / 2;
@@ -95,11 +122,25 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (!IsJumping && jumpDelay <= 0 && (Input.GetKey(GlobalScript.Controls[(int)Binds.Jump]) || Input.GetKey(GlobalScript.SecondaryControls[(int)Binds.Jump])))
+        if (!IsJumping)
         {
-            IsJumping = true;
-            jumpTime = MaxJumpTime;
-            jumpDelay = JumpDelay;
+            if ( jumpDelay <= 0 && (Input.GetKey(GlobalScript.Controls[(int)Binds.Jump]) || Input.GetKey(GlobalScript.SecondaryControls[(int)Binds.Jump])))
+            {
+                IsJumping = true;
+                jumpTime = MaxJumpTime;
+                jumpDelay = JumpDelay;
+            }
+
+            if (jumpDelay > 0)
+            {
+                jumpDelay -= Time.deltaTime;
+            }
+        }
+
+        if (cc.isGrounded && !(Input.GetKey(GlobalScript.Controls[(int)Binds.Jump]) || Input.GetKey(GlobalScript.SecondaryControls[(int)Binds.Jump])))
+        {
+            IsJumping = false;
+            movement.y = -2;
         }
 
         if (IsJumping)
@@ -111,17 +152,17 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (cc.isGrounded)
-        {
-            IsJumping = false;
-            jumpDelay = 0;
-            movement.y = 0;
-        }
+        
+
+        
+
 
         movement.x = Mathf.Clamp(movement.x, -MaxSpeed , MaxSpeed);
         movement.z = Mathf.Clamp(movement.z, -MaxSpeed , MaxSpeed);
 
-        cc.Move(movement * Time.deltaTime);
+        cc.Move(transform.rotation * movement * Time.deltaTime);
+
+
 
 
         //interact
