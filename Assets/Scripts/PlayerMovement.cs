@@ -28,25 +28,16 @@ public class PlayerMovement : MonoBehaviour
 
     private CharacterController cc;
 
+    //public WaginInventory WI;
+
     
-
-    public enum Binds
-    {
-        //enums used with static Controls[] list.
-
-        WalkForwards = 0,
-        WalkLeft = 1,
-        WalkBackwards = 2,
-        WalkRight = 3,
-        Interact = 4,
-        Jump = 5
-    }
 
     void Start()
     {
         movement = Vector3.zero;
        
         cc = GetComponent<CharacterController>();
+       
     }
 
     
@@ -57,13 +48,13 @@ public class PlayerMovement : MonoBehaviour
 
         float mouseX = Input.GetAxis("Mouse X"), mouseY = Input.GetAxis("Mouse Y");
 
-        if (!GlobalScript.InvertPitch)
+        if (!GS.InvertPitch)
             mouseY = -mouseY;
-        verticalRotation += mouseY * GlobalScript.MouseYSensativity;
+        verticalRotation += mouseY * GS.MouseYSensativity;
         
         verticalRotation = Mathf.Clamp(verticalRotation, CamMinTilt, CamMaxTilt);
 
-        transform.Rotate(0, mouseX * GlobalScript.MouseXSensativity, 0);
+        transform.Rotate(0, mouseX * GS.MouseXSensativity, 0);
         cam.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
 
         if (Input.GetMouseButtonDown(0))
@@ -96,27 +87,27 @@ public class PlayerMovement : MonoBehaviour
         //All Key Inputs
 
         //Forward
-        if (Input.GetKey(GlobalScript.Controls[(int)Binds.WalkForwards]) || Input.GetKey(GlobalScript.SecondaryControls[(int)Binds.WalkForwards]))
+        if (Input.GetKey(GS.Controls[(int)GS.Binds.WalkForwards]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.WalkForwards]))
         {
             movement.z += WalkSpeed;
         }
 
         //Backward
-        if (Input.GetKey(GlobalScript.Controls[(int)Binds.WalkBackwards]) || Input.GetKey(GlobalScript.SecondaryControls[(int)Binds.WalkBackwards]))
+        if (Input.GetKey(GS.Controls[(int)GS.Binds.WalkBackwards]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.WalkBackwards]))
         {
             movement.z -= WalkSpeed;
 
         }
 
         //left
-        if (Input.GetKey(GlobalScript.Controls[(int)Binds.WalkLeft]) || Input.GetKey(GlobalScript.SecondaryControls[(int)Binds.WalkLeft]))
+        if (Input.GetKey(GS.Controls[(int)GS.Binds.WalkLeft]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.WalkLeft]))
         {
             movement.x -= WalkSpeed;
 
         }
 
         //right
-        if (Input.GetKey(GlobalScript.Controls[(int)Binds.WalkRight]) || Input.GetKey(GlobalScript.SecondaryControls[(int)Binds.WalkRight]))
+        if (Input.GetKey(GS.Controls[(int)GS.Binds.WalkRight]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.WalkRight]))
         {
             movement.x += WalkSpeed;
 
@@ -124,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!IsJumping)
         {
-            if ( jumpDelay <= 0 && (Input.GetKey(GlobalScript.Controls[(int)Binds.Jump]) || Input.GetKey(GlobalScript.SecondaryControls[(int)Binds.Jump])))
+            if ( jumpDelay <= 0 && (Input.GetKey(GS.Controls[(int)GS.Binds.Jump]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.Jump])))
             {
                 IsJumping = true;
                 jumpTime = MaxJumpTime;
@@ -137,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (cc.isGrounded && !(Input.GetKey(GlobalScript.Controls[(int)Binds.Jump]) || Input.GetKey(GlobalScript.SecondaryControls[(int)Binds.Jump])))
+        if (cc.isGrounded && !(Input.GetKey(GS.Controls[(int)GS.Binds.Jump]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.Jump])))
         {
             IsJumping = false;
             movement.y = -2;
@@ -152,23 +143,10 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        
-
-        
-
 
         movement.x = Mathf.Clamp(movement.x, -MaxSpeed , MaxSpeed);
         movement.z = Mathf.Clamp(movement.z, -MaxSpeed , MaxSpeed);
 
         cc.Move(transform.rotation * movement * Time.deltaTime);
-
-
-
-
-        //interact
-        if (Input.GetKeyDown(GlobalScript.Controls[(int)Binds.Interact]) && Input.GetKeyDown(GlobalScript.SecondaryControls[(int)Binds.Interact]))
-        {
-
-        }
     }
 }
