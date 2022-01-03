@@ -17,7 +17,7 @@ public class ItemPreviewSetter : MonoBehaviour
 
     private void OnTriggerStay(Collider col)
     {
-        if (col.gameObject.layer != 6 && col.gameObject.layer != 7)
+        if (col.gameObject.layer != 6 && col.gameObject.layer != 7 && col.gameObject.layer != 8)
         {
             GetComponent<Renderer>().material = no;
             CanPlace = false;

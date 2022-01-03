@@ -18,16 +18,16 @@ public class MerchantInventory : MonoBehaviour
         }
 
 
-        foreach (ItemInstance item in Inventory)
-        {
-            print($"found item with the following parameters:" +
-                $"\nName: {item.Name}" +
-                $"\nAmmount: {item.Amount}" +
-                $"\nCondition: {item.Condition}" +
-                $"\nMarket Value: {item.MarketValue}" +
-                $"\nImage: {item.Image}" +
-                $"\nPrefab: {item.Prefab}");
-        }
+        //foreach (ItemInstance item in Inventory)
+        //{
+        //    print($"found item with the following parameters:" +
+        //        $"\nName: {item.Name}" +
+        //        $"\nAmmount: {item.Amount}" +
+        //        $"\nCondition: {item.Condition}" +
+        //        $"\nMarket Value: {item.MarketValue}" +
+        //        $"\nImage: {item.Image}" +
+        //        $"\nPrefab: {item.Prefab}");
+        //}
     }
 
     private void Update()

@@ -28,7 +28,18 @@ public class PlayerActions : MonoBehaviour
         //interact
         if (Input.GetKeyDown(GS.Controls[(int)GS.Binds.Interact]) || Input.GetKeyDown(GS.SecondaryControls[(int)GS.Binds.Interact]))
         {
+            RaycastHit hit;
+            Vector3 point = new Vector3(0.5f, 0.5f, 0);
+            Ray ray = cam.ViewportPointToRay(point);
 
+            if (Physics.Raycast(ray, out hit, PickupDistance))
+            {
+                TriggerCore trig = hit.collider.GetComponent<TriggerCore>();
+                if (trig)
+                {
+                    trig.Interact();
+                }
+            }
         }
 
         if (Input.GetKeyDown(GS.Controls[(int)GS.Binds.Pickup]) || Input.GetKeyDown(GS.SecondaryControls[(int)GS.Binds.Pickup]))
@@ -91,6 +102,7 @@ public class PlayerActions : MonoBehaviour
                     ObjPreview.GetComponent<Collider>().isTrigger = true;
                     ObjPreview.AddComponent<Rigidbody>().isKinematic = true;
                     ObjPreview.layer = 0;
+                    ObjPreview.tag = "Untagged";
                         
                     ips = ObjPreview.AddComponent<ItemPreviewSetter>();
                     ips.yes = previewMat;

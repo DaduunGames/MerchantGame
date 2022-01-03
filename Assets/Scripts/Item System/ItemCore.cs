@@ -15,6 +15,8 @@ public class ItemCore : ScriptableObject
         Image = image;
         this.Prefab = Prefab;
         MarketValue = marketValue;
+
+        Debug.ClearDeveloperConsole();
     }
     public ItemCore()
     {
