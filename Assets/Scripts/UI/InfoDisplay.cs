@@ -23,6 +23,13 @@ public class InfoDisplay : MonoBehaviour
 
     private void Update()
     {
+        if (!cam)
+        {
+            cam = Camera.current;
+            return;
+        }
+
+
         RaycastHit hit;
         Vector3 point = new Vector3(0.5f, 0.5f, 0);
         Ray ray = cam.ViewportPointToRay(point);

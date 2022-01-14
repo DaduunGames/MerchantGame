@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using UnityEngine.SceneManagement;
 
 public static class GS
 {
-    public static float MouseXSensativity = 10;
-    public static float MouseYSensativity = 10;
+    public static float MouseXSensativity = 1f;
+    public static float MouseYSensativity = 1f;
     public static bool InvertPitch = false;
+    
 
     public enum Binds
     {
@@ -44,9 +47,57 @@ public static class GS
     };
 
     //All the keybinds
-    public static List<KeyCode> Controls = DefaultControls;
-    public static List<KeyCode> SecondaryControls = SecondaryDefaults;
+    public static Keybinds keybinds = new Keybinds();
 
-    
-    
+    public static Keybinds GetKeybinds()
+    {
+        return keybinds;
+    }
+    public static void SetKeybinds(Keybinds newKeybinds)
+    {
+        keybinds = newKeybinds;
+    }
+    public static void SetKeybindsDefault()
+    {
+        keybinds.Primary = DefaultControls;
+        keybinds.Secondary = SecondaryDefaults;
+    }
+
+
+
+    // game save functionality
+
+    public static GameData gameData = new GameData();
+    private static string filePath = Application.persistentDataPath + "/GameSave.json";
+    public static void SaveGame()
+    {
+        Debug.Log("saving game");
+        gameData.GetWorld();
+        string data = JsonUtility.ToJson(gameData);
+        File.WriteAllText(filePath, "");
+        File.WriteAllText(filePath, data);
+
+    }
+    public static void LoadGame()
+    {
+        //Debug.Log("Loading game");
+        if (File.Exists(filePath))
+        {
+            string foundData = File.ReadAllText(filePath);
+            gameData = JsonUtility.FromJson<GameData>(foundData);
+           
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        gameData.SetWorld();
+    }
+
+
+
+}
+
+[System.Serializable]
+public class Keybinds
+{
+    public List<KeyCode> Primary = GS.DefaultControls;
+    public List<KeyCode> Secondary = GS.SecondaryDefaults;
 }

@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerMovement : MonoBehaviour
 {
+    
+    public GameObject thisObj;
     public Camera cam;
 
     public float WalkSpeed = 1;
@@ -30,28 +31,28 @@ public class PlayerMovement : MonoBehaviour
 
     //public WaginInventory WI;
 
-    
+
 
     void Start()
     {
         movement = Vector3.zero;
-       
+
         cc = GetComponent<CharacterController>();
-       
+        thisObj = gameObject;
+
     }
 
-    
+
     void Update()
     {
         movement.y -= Gravity;
 
-
-        float mouseX = Input.GetAxis("Mouse X"), mouseY = Input.GetAxis("Mouse Y");
+        float mouseX = Input.GetAxis("Mouse X") * GS.MouseXSensativity, mouseY = Input.GetAxis("Mouse Y") * GS.MouseYSensativity;
 
         if (!GS.InvertPitch)
             mouseY = -mouseY;
         verticalRotation += mouseY * GS.MouseYSensativity;
-        
+
         verticalRotation = Mathf.Clamp(verticalRotation, CamMinTilt, CamMaxTilt);
 
         transform.Rotate(0, mouseX * GS.MouseXSensativity, 0);
@@ -65,13 +66,13 @@ public class PlayerMovement : MonoBehaviour
 
         grounded = cc.isGrounded;
 
-        
 
-        if(movement.x > 0)
+
+        if (movement.x > 0)
         {
             movement.x -= WalkSpeed / 2;
         }
-        if(movement.z > 0)
+        if (movement.z > 0)
         {
             movement.z -= WalkSpeed / 2;
         }
@@ -87,27 +88,27 @@ public class PlayerMovement : MonoBehaviour
         //All Key Inputs
 
         //Forward
-        if (Input.GetKey(GS.Controls[(int)GS.Binds.WalkForwards]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.WalkForwards]))
+        if (Input.GetKey(GS.keybinds.Primary[(int)GS.Binds.WalkForwards]) || Input.GetKey(GS.keybinds.Secondary[(int)GS.Binds.WalkForwards]))
         {
             movement.z += WalkSpeed;
         }
 
         //Backward
-        if (Input.GetKey(GS.Controls[(int)GS.Binds.WalkBackwards]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.WalkBackwards]))
+        if (Input.GetKey(GS.keybinds.Primary[(int)GS.Binds.WalkBackwards]) || Input.GetKey(GS.keybinds.Secondary[(int)GS.Binds.WalkBackwards]))
         {
             movement.z -= WalkSpeed;
 
         }
 
         //left
-        if (Input.GetKey(GS.Controls[(int)GS.Binds.WalkLeft]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.WalkLeft]))
+        if (Input.GetKey(GS.keybinds.Primary[(int)GS.Binds.WalkLeft]) || Input.GetKey(GS.keybinds.Secondary[(int)GS.Binds.WalkLeft]))
         {
             movement.x -= WalkSpeed;
 
         }
 
         //right
-        if (Input.GetKey(GS.Controls[(int)GS.Binds.WalkRight]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.WalkRight]))
+        if (Input.GetKey(GS.keybinds.Primary[(int)GS.Binds.WalkRight]) || Input.GetKey(GS.keybinds.Secondary[(int)GS.Binds.WalkRight]))
         {
             movement.x += WalkSpeed;
 
@@ -115,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!IsJumping)
         {
-            if ( jumpDelay <= 0 && (Input.GetKey(GS.Controls[(int)GS.Binds.Jump]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.Jump])))
+            if (jumpDelay <= 0 && (Input.GetKey(GS.keybinds.Primary[(int)GS.Binds.Jump]) || Input.GetKey(GS.keybinds.Secondary[(int)GS.Binds.Jump])))
             {
                 IsJumping = true;
                 jumpTime = MaxJumpTime;
@@ -128,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (cc.isGrounded && !(Input.GetKey(GS.Controls[(int)GS.Binds.Jump]) || Input.GetKey(GS.SecondaryControls[(int)GS.Binds.Jump])))
+        if (cc.isGrounded && !(Input.GetKey(GS.keybinds.Primary[(int)GS.Binds.Jump]) || Input.GetKey(GS.keybinds.Secondary[(int)GS.Binds.Jump])))
         {
             IsJumping = false;
             movement.y = -2;
@@ -138,14 +139,14 @@ public class PlayerMovement : MonoBehaviour
         {
             if (jumpTime > 0)
             {
-                movement.y = Jumpspeed * (jumpTime/MaxJumpTime);
+                movement.y = Jumpspeed * (jumpTime / MaxJumpTime);
                 jumpTime -= Time.deltaTime;
             }
         }
 
 
-        movement.x = Mathf.Clamp(movement.x, -MaxSpeed , MaxSpeed);
-        movement.z = Mathf.Clamp(movement.z, -MaxSpeed , MaxSpeed);
+        movement.x = Mathf.Clamp(movement.x, -MaxSpeed, MaxSpeed);
+        movement.z = Mathf.Clamp(movement.z, -MaxSpeed, MaxSpeed);
 
         cc.Move(transform.rotation * movement * Time.deltaTime);
     }

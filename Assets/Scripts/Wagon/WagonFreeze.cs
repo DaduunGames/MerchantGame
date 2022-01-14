@@ -102,7 +102,7 @@ public class WagonFreeze : MonoBehaviour
     void SetRopes(bool visible, LineRenderer[] lines, int segments)
     {
         
-        print("setting lines");
+        //print("setting lines");
         foreach (LineRenderer lr in lines)
         {
             if (visible)

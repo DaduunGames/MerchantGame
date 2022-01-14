@@ -25,8 +25,9 @@ public class PlayerActions : MonoBehaviour
 
     void Update()
     {
+        
         //interact
-        if (Input.GetKeyDown(GS.Controls[(int)GS.Binds.Interact]) || Input.GetKeyDown(GS.SecondaryControls[(int)GS.Binds.Interact]))
+        if (Input.GetKeyDown(GS.keybinds.Primary[(int)GS.Binds.Interact]) || Input.GetKeyDown(GS.keybinds.Secondary[(int)GS.Binds.Interact]))
         {
             RaycastHit hit;
             Vector3 point = new Vector3(0.5f, 0.5f, 0);
@@ -42,7 +43,7 @@ public class PlayerActions : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(GS.Controls[(int)GS.Binds.Pickup]) || Input.GetKeyDown(GS.SecondaryControls[(int)GS.Binds.Pickup]))
+        if (Input.GetKeyDown(GS.keybinds.Primary[(int)GS.Binds.Pickup]) || Input.GetKeyDown(GS.keybinds.Secondary[(int)GS.Binds.Pickup]))
         {
             if (!IsHolding)
             {
