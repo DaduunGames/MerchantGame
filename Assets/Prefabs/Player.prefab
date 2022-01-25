@@ -207,7 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a2f29c3f03db8498732b0b57c742f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 6951092443167537087}
   WalkSpeed: 1
   MaxSpeed: 10
   SideStepSpeedModifier: 0.75
@@ -218,6 +217,9 @@ MonoBehaviour:
   Gravity: 0.25
   CamMaxTilt: 90
   CamMinTilt: -80
+  InVehicle: 0
+  thisObj: {fileID: 0}
+  cam: {fileID: 6951092443167537087}
 --- !u!143 &1984020575820115101
 CharacterController:
   m_ObjectHideFlags: 0

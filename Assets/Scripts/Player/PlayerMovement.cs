@@ -31,12 +31,15 @@ public class PlayerMovement : MonoBehaviour
     public float CamMaxTilt = 80;
     public float CamMinTilt = -90;
 
+    //gotta disable input when in vehicle
+    public bool InVehicle = false;
+
     [Header("References")]
     public GameObject thisObj;
     public Camera cam;
     private CharacterController cc;
 
-
+   
 
     void Start()
     {
@@ -45,13 +48,13 @@ public class PlayerMovement : MonoBehaviour
         cc = GetComponent<CharacterController>();
         thisObj = gameObject;
 
+        
     }
 
 
     void Update()
     {
-        movement.y -= Gravity;
-
+        #region mouse movement
         float mouseX = Input.GetAxis("Mouse X") * GS.MouseXSensativity, mouseY = Input.GetAxis("Mouse Y") * GS.MouseYSensativity;
 
         if (!GS.InvertPitch)
@@ -67,12 +70,23 @@ public class PlayerMovement : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
+        #endregion
+
+
+        if (!InVehicle)
+        {
+            MakecharacterMove();
+        }
+    }
+
+    private void MakecharacterMove()
+    {
+        movement.y -= Gravity;
 
 
         grounded = cc.isGrounded;
 
-
-
+        #region WASD
         if (movement.x > 0)
         {
             movement.x -= WalkSpeed / 2;
@@ -89,8 +103,6 @@ public class PlayerMovement : MonoBehaviour
         {
             movement.z += WalkSpeed / 2;
         }
-
-        //All Key Inputs
 
         //Forward
         if (Input.GetKey(GS.keybinds.Primary[(int)GS.Binds.WalkForwards]) || Input.GetKey(GS.keybinds.Secondary[(int)GS.Binds.WalkForwards]))
@@ -119,6 +131,11 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
+        movement.x = Mathf.Clamp(movement.x, -MaxSpeed, MaxSpeed);
+        movement.z = Mathf.Clamp(movement.z, -MaxSpeed, MaxSpeed);
+        #endregion
+
+        #region jumping
         if (!IsJumping)
         {
             if (jumpDelay <= 0 && (Input.GetKey(GS.keybinds.Primary[(int)GS.Binds.Jump]) || Input.GetKey(GS.keybinds.Secondary[(int)GS.Binds.Jump])))
@@ -148,11 +165,12 @@ public class PlayerMovement : MonoBehaviour
                 jumpTime -= Time.deltaTime;
             }
         }
+        #endregion
 
-
-        movement.x = Mathf.Clamp(movement.x, -MaxSpeed, MaxSpeed);
-        movement.z = Mathf.Clamp(movement.z, -MaxSpeed, MaxSpeed);
+       
 
         cc.Move(transform.rotation * movement * Time.deltaTime);
     }
+
+    
 }

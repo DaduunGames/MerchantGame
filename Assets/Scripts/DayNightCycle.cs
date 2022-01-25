@@ -53,6 +53,7 @@ public class DayNightCycle : MonoBehaviour
         sun.color = sunColour.Evaluate(time);
         moon.color = moonColour.Evaluate(time);
 
+        #region enable/disable the sun/moon
         {//enable/disable the sun/moon
             //enable/disable the sun
             if (sun.intensity <= 0.3 && sun.gameObject.activeInHierarchy)
@@ -74,6 +75,7 @@ public class DayNightCycle : MonoBehaviour
                 moon.gameObject.SetActive(true);
             }
         }
+        #endregion
     }
 }
 
