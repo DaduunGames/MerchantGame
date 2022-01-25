@@ -3,33 +3,38 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerMovement : MonoBehaviour
 {
-    
-    public GameObject thisObj;
-    public Camera cam;
 
+    [Header("Movement Variables")]
+    //basic speed variables
     public float WalkSpeed = 1;
     public float MaxSpeed = 1;
     public float SideStepSpeedModifier = 0.75f;
     public float BackStepSpeedModifier = 0.75f;
 
+    //movement logic
+    Vector3 movement;
+    float verticalRotation;
+    bool IsJumping = false;
+    bool grounded;
+
+    // variables for jump logic
     public float Jumpspeed = 0.3f;
     public float MaxJumpTime = 0.5f;
     float jumpTime;
     public float JumpDelay = 0.5f;
     float jumpDelay;
-    bool IsJumping = false;
+
+    //Hope gravity doesnt need explaining
     public float Gravity = 10;
 
-    bool grounded;
-
-    Vector3 movement;
-    float verticalRotation;
+    //min and max allowable cam tilt
     public float CamMaxTilt = 80;
     public float CamMinTilt = -90;
 
+    [Header("References")]
+    public GameObject thisObj;
+    public Camera cam;
     private CharacterController cc;
-
-    //public WaginInventory WI;
 
 
 
