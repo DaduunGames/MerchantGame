@@ -168,10 +168,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1268946187303417090}
+  - component: {fileID: 8553427038651712478}
   - component: {fileID: 3950697982698079346}
-  - component: {fileID: 1984020575820115101}
   - component: {fileID: 8925744704720510344}
   - component: {fileID: 7781273776638309498}
+  - component: {fileID: 1984020575820115101}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -195,6 +196,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8553427038651712478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9058466442116409492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9409b9f493a3f4c859dc5f9f9c51c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  health: 10
+  MaxStamina: 10
+  hunger: 5
+  thirst: 5
 --- !u!114 &3950697982698079346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,26 +236,7 @@ MonoBehaviour:
   CamMaxTilt: 90
   CamMinTilt: -80
   InVehicle: 0
-  thisObj: {fileID: 0}
   cam: {fileID: 6951092443167537087}
---- !u!143 &1984020575820115101
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9058466442116409492}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &8925744704720510344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,3 +271,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!143 &1984020575820115101
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9058466442116409492}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}

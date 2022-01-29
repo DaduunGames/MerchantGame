@@ -26,6 +26,8 @@ public class PlayerActions : MonoBehaviour
     void Update()
     {
         
+
+
         //interact
         if (Input.GetKeyDown(GS.keybinds.Primary[(int)GS.Binds.Interact]) || Input.GetKeyDown(GS.keybinds.Secondary[(int)GS.Binds.Interact]))
         {

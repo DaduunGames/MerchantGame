@@ -19,13 +19,15 @@ public class ItemInstance : ItemCore
         init(item.Name, item.Image, item.Prefab, item.MarketValue);
     }
 
-    public void CreatePhysicalItem(Vector3 pos, Quaternion rot)
+    public GameObject CreatePhysicalItem(Vector3 pos, Quaternion rot)
     {
         GameObject real = Instantiate(ItemDB.GetPhysicalBase(), pos, rot);
         real.GetComponent<PhysicalItem>().init(this);
 
         GameObject mesh = GetMesh();
         Instantiate(mesh, pos, rot, real.transform);
+
+        return real;
     }
 
     public GameObject GetMesh()

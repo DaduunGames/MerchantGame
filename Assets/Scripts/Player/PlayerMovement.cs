@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
     public bool InVehicle = false;
 
     [Header("References")]
-    public GameObject thisObj;
     public Camera cam;
     private CharacterController cc;
 
@@ -46,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
         movement = Vector3.zero;
 
         cc = GetComponent<CharacterController>();
-        thisObj = gameObject;
 
         
     }

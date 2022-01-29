@@ -6,6 +6,7 @@ public class PhysicalItem : MonoBehaviour
 {
     public ItemInstance itemInstance;
 
+    public bool isOnWagon = false;
     //public ItemDB.eName Name;
     //public int Amount;
     //[Range(0,100)]

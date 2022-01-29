@@ -44,9 +44,19 @@ public class MerchantInventory : MonoBehaviour
         {
             Inventory[2].CreatePhysicalItem( transform.position + transform.rotation * new Vector3(0, 1, 2), Quaternion.identity);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+
+
+        if(Input.GetKeyDown(KeyCode.P))
         {
-            Inventory[3].CreatePhysicalItem( transform.position + transform.rotation * new Vector3(0, 1, 2), Quaternion.identity);
+            GS.SaveGame();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            GS.LoadGame(1);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            GS.ClearSaveData();
         }
     }
 }

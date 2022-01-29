@@ -7,9 +7,9 @@ public static class ItemDB
     public enum eName
     {
         empty,
-        cloth,
-        fruits,
         pinapple,
+        fruits,
+        cloth,
         Wool
     }
 

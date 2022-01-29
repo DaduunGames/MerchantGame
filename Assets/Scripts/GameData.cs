@@ -7,29 +7,61 @@ using UnityEngine.SceneManagement;
 public class GameData
 {
     public bool IsSet = false;
+
     public Keybinds savedKeybinds = new Keybinds();
-    public PlayerMovement player = new PlayerMovement();
-    public GameObject[] items = new GameObject[0];
+
+    public int p_maxHealth, p_health, p_hunger, p_thirst;
+    public float p_maxStamina;
+    public Vector3 p_pos;
+    public Quaternion p_rot;
+
+    public List<ItemSave> items = new List<ItemSave>();
+
+    public WagonSave wagonSave = new WagonSave();
+
 
     public void GetWorld()
     {
-        savedKeybinds = GS.GetKeybinds();
-        player = Object.FindObjectOfType<PlayerMovement>();
+        GetSettings();
+
+        PlayerResources playerResources = Object.FindObjectOfType<PlayerResources>();
+        
+        p_maxHealth = playerResources.maxHealth;
+        p_health = playerResources.health;
+        p_hunger = playerResources.hunger;
+        p_thirst = playerResources.thirst;
+        p_maxStamina = playerResources.MaxStamina;
+        p_pos = playerResources.transform.position;
+        p_rot = playerResources.transform.rotation;
+
+        WagonFreeze foundWagon = GameObject.FindObjectOfType<WagonFreeze>();
+        wagonSave = new WagonSave(foundWagon.transform.root.position, foundWagon.transform.root.rotation, foundWagon.IsFrozen);
 
 
-        //if (GameObject.FindWithTag("ItemObject"))
-        //{
-        //    items = GameObject.FindGameObjectsWithTag("ItemObject");
-        //}
+        PhysicalItem[] foundItems = GameObject.FindObjectsOfType<PhysicalItem>();
+        items.Clear();
+        foreach (PhysicalItem item in foundItems)
+        {
+            items.Add(new ItemSave( item.transform.position, item.transform.rotation, item.itemInstance.Name, item.itemInstance.Amount, item.itemInstance.Condition));
+        }
+
 
     }
 
     public void SetWorld()
     {
-        GS.SetKeybinds(savedKeybinds);
-        
+
+        SetSettings();
 
         IsSet = true;    
     }
 
+    public void GetSettings()
+    {
+        savedKeybinds = GS.GetKeybinds();
+    }
+    public void SetSettings()
+    {
+        GS.SetKeybinds(savedKeybinds);
+    }
 }

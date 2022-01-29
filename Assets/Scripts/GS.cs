@@ -69,8 +69,11 @@ public static class GS
 
     public static GameData gameData = new GameData();
     private static string filePath = Application.persistentDataPath + "/GameSave.json";
+    
     public static void SaveGame()
     {
+        //Debug.Log(filePath);
+
         Debug.Log("saving game");
         gameData.GetWorld();
         string data = JsonUtility.ToJson(gameData);
@@ -78,7 +81,7 @@ public static class GS
         File.WriteAllText(filePath, data);
 
     }
-    public static void LoadGame()
+    public static void LoadGame(int index)
     {
         //Debug.Log("Loading game");
         if (File.Exists(filePath))
@@ -87,10 +90,15 @@ public static class GS
             gameData = JsonUtility.FromJson<GameData>(foundData);
            
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(index);
         gameData.SetWorld();
+        
     }
 
+    public static void ClearSaveData()
+    {
+        File.WriteAllText(filePath, "");
+    }
 
 
 }

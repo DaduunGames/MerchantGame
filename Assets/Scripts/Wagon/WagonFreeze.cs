@@ -45,6 +45,7 @@ public class WagonFreeze : MonoBehaviour
             {
                 item.GetComponent<Rigidbody>().isKinematic = true;
                 item.transform.parent = transform;
+                
             }
 
             SetRopes(true, linesHorizontal, HorizontalSegments);
@@ -61,6 +62,19 @@ public class WagonFreeze : MonoBehaviour
                 item.transform.parent = null;
             }
         }
+    }
+
+    public void ForceFreeze()
+    {
+        foreach (GameObject item in Items)
+        {
+            item.GetComponent<Rigidbody>().isKinematic = true;
+            item.transform.parent = transform;
+
+        }
+
+        SetRopes(true, linesHorizontal, HorizontalSegments);
+        SetRopes(true, linesVertical, VerticalSegments);
     }
 
     private void OnTriggerEnter(Collider col)
