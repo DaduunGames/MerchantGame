@@ -790,9 +790,9 @@ MonoBehaviour:
   seat: {fileID: 127443862}
   dismountOffset: {x: 0, y: 0, z: 0}
   Rotation: 0
-  WagonSpeed: 0.001
+  WagonSpeed: 0.01
   MaxSpeed: 6
-  RotateSpeed: 20
+  RotateSpeed: 0.1
   MaxRotateSpeed: 45
   IsMounted: 0
   MountDelay: 0.5
