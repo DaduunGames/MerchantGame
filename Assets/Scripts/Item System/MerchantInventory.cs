@@ -8,6 +8,8 @@ public class MerchantInventory : MonoBehaviour
     public List<ItemConstruct> InventoryConstructor;
     public List<ItemInstance> Inventory;
 
+    public Transform spawnZone;
+
     private void Start()
     {
         foreach(ItemConstruct ic in InventoryConstructor)
@@ -16,47 +18,14 @@ public class MerchantInventory : MonoBehaviour
             inst.init(ic.Name, ic.Amount, ic.Condition);
             Inventory.Add(inst);
         }
-
-
-        //foreach (ItemInstance item in Inventory)
-        //{
-        //    print($"found item with the following parameters:" +
-        //        $"\nName: {item.Name}" +
-        //        $"\nAmmount: {item.Amount}" +
-        //        $"\nCondition: {item.Condition}" +
-        //        $"\nMarket Value: {item.MarketValue}" +
-        //        $"\nImage: {item.Image}" +
-        //        $"\nPrefab: {item.Prefab}");
-        //}
     }
 
-    private void Update()
+
+    public void spawnItem(int index)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Inventory[0].CreatePhysicalItem( transform.position + transform.rotation * new Vector3(0, 1, 2), Quaternion.identity);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Inventory[1].CreatePhysicalItem( transform.position + transform.rotation * new Vector3(0, 1, 2), Quaternion.identity);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Inventory[2].CreatePhysicalItem( transform.position + transform.rotation * new Vector3(0, 1, 2), Quaternion.identity);
-        }
-
-
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            GS.SaveGame();
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            GS.LoadGame(1);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            GS.ClearSaveData();
-        }
+        Inventory[index].CreatePhysicalItem(spawnZone.position , spawnZone.rotation);
     }
+
+
+    
 }

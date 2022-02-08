@@ -17,6 +17,7 @@ public class PlayerActions : MonoBehaviour
     GameObject HeldObj;
     GameObject ObjPreview;
 
+    public LayerMask PickupLayerMask;
     private void Start()
     {
         cam = GetComponentInChildren<Camera>();
@@ -53,7 +54,7 @@ public class PlayerActions : MonoBehaviour
                 Vector3 point = new Vector3(0.5f, 0.5f, 0);
                 Ray ray = cam.ViewportPointToRay(point);
 
-                if (Physics.Raycast(ray, out hit, PickupDistance) && !IsHolding)
+                if (Physics.Raycast(ray, out hit, PickupDistance, PickupLayerMask) && !IsHolding)
                 {
                     if (hit.collider.tag == "Item")
                     {
